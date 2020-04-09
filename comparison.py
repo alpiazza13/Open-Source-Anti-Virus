@@ -38,17 +38,6 @@ for virus in viruses:
     downloaded = get_hex(downloaded)
     i = 0
     while i < len(downloaded) - sizeof_substring - 1:
-        print(i)
-        for substr in substrings:
-            if downloaded[i:i+sizeof_substring] == substr:
-                print("this is a virus")
-                sys.exit(0)
-        i+=sizeof_substring
-
-    # I think i should be incremented by 1, not sizeof_substring. I also would use "in" instead of making another loop -
-    # I don't think it really matters, but probably more readable/concise with "in". The following code corresponds to lines 39-46:
-    i = 0
-    while i < len(downloaded) - sizeof_substring - 1:
         if downloaded[i:i+sizeof_substring] in substrings:
             print("this is a virus")
             sys.exit(0)
