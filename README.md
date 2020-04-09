@@ -1,4 +1,7 @@
 # Open-Source-Anti-Virus
+
+The following are random notes compiled from our group discussion:
+
 https://stackoverflow.com/questions/29338066/mac-osx-execute-a-python-script-at-startup
 
 But for now, would be helpful if you could try reading about ways of comparing the hex of two files.
