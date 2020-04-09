@@ -17,12 +17,12 @@ def get_hex(file):
     str_hex = str(hex1)[2:-1] # get rid of first 2 and last 1 characters
     return str_hex
 
-def make_substrings(size, file):
+def make_substrings(size, filename):
     i = 0
     substrings = []
-    while i < len(file) - sizeof_substring - 1:
+    while i < len(filename) - sizeof_substring - 1:
         #file might be a keyword so may need to change that variable name
-        substrings.append(file[i:i+sizeof_substring])
+        substrings.append(filename[i:i+sizeof_substring])
         i+=1
     return substrings
 
