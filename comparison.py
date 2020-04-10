@@ -17,7 +17,6 @@ def get_hex(file):
     str_hex = str(hex1)[2:-1] # get rid of first 2 and last 1 characters
     return str_hex
 
-
 def make_substrings(size, filename):
     i = 0
     substrings = []
@@ -27,20 +26,23 @@ def make_substrings(size, filename):
     return substrings
 
 viruses=["virus1.txt", "virus2.txt", "virus3.txt"]
+latest_download = newest_file()
+download_hex = get_hex(latest_download)
+# print(latest_download)
 
-downloaded = newest_file()
-downloaded = get_hex(downloaded)
-print(len(downloaded))
 
-for virus in viruses:
-    print(virus)
-    # have to unzip it first for our real files
-    virus = get_hex(virus)
-    sizeof_substring = 50
-    substrings = make_substrings(sizeof_substring, virus)
-    i = 0
-    while i < len(downloaded) - sizeof_substring - 1:
-        if downloaded[i:i+sizeof_substring] in substrings:
-            print("this is a virus")
-            sys.exit(0)
-        i += 1
+def is_virus(file, viruses):
+    for virus in viruses:
+        virus = get_hex(virus)
+        sizeof_substring = 50
+        substrings = make_substrings(sizeof_substring, virus)
+        i = 0
+        while i < len(file) - sizeof_substring - 1:
+            if file[i:i+sizeof_substring] in substrings:
+                is_virus = True
+                return True
+                sys.exit(0)
+            i += 1
+    return False
+
+print(is_virus(download_hex, viruses))
