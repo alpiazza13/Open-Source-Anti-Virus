@@ -21,7 +21,7 @@ def get_hex(file):
 def make_substrings(size, filename):
     i = 0
     substrings = []
-    while i < len(filename) - sizeof_substring - 1:
+    while i < len(filename) - size - 1:
         substrings.append(filename[i:i+sizeof_substring])
         i+=1
     return substrings
@@ -36,7 +36,7 @@ for virus in viruses:
     print(virus)
     # have to unzip it first for our real files
     virus = get_hex(virus)
-    sizeof_substring = 500
+    sizeof_substring = 50
     substrings = make_substrings(sizeof_substring, virus)
     i = 0
     while i < len(downloaded) - sizeof_substring - 1:
