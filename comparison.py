@@ -22,7 +22,7 @@ def make_substrings(size, filename):
     i = 0
     substrings = []
     while i < len(filename) - size - 1:
-        substrings.append(filename[i:i+sizeof_substring])
+        substrings.append(filename[i:i+size])
         i+=1
     return substrings
 
