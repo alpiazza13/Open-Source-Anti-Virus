@@ -45,13 +45,26 @@ print(latest_download)
 #             i += 1
 #     return False
 
+
 # maybe change order - if any file_substring in virus for file_substring in file_substrings
-def is_virus(file, viruses):
+# def is_virus(file, viruses):
+#     for virus in viruses:
+#         virus = get_hex(virus)
+#         substring_size = 50
+#         substrings = make_substrings(substring_size, virus)
+#         if any(substring in file for substring in substrings):
+#             return True
+#     return False
+#
+# print(is_virus(download_hex, viruses))
+
+#final version
+def is_virus(hex_file, viruses):
+    substring_size = 200
+    hex_file_subs = make_substrings(substring_size, hex_file)
     for virus in viruses:
         virus = get_hex(virus)
-        substring_size = 50
-        substrings = make_substrings(substring_size, virus)
-        if any(substring in file for substring in substrings):
+        if any(hex_sub in virus for hex_sub in hex_file_subs):
             return True
     return False
 
