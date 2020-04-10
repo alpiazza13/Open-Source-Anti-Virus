@@ -35,7 +35,7 @@ for virus in viruses:
     print(virus)
     # have to unzip it first for our real files
     virus = get_hex(virus)
-    sizeof_substring = 50
+    sizeof_substring = 500
     substrings = make_substrings(sizeof_substring, virus)
     i = 0
     while i < len(downloaded) - sizeof_substring - 1:
