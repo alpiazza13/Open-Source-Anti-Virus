@@ -28,21 +28,31 @@ def make_substrings(size, filename):
 viruses=["virus1.txt", "virus2.txt", "virus3.txt"]
 latest_download = newest_file()
 download_hex = get_hex(latest_download)
-# print(latest_download)
+print(latest_download)
 
 
+# def is_virus(file, viruses):
+#     for virus in viruses:
+#         virus = get_hex(virus)
+#         sizeof_substring = 50
+#         substrings = make_substrings(sizeof_substring, virus)
+#         i = 0
+#         while i < len(file) - sizeof_substring - 1:
+#             if file[i:i+sizeof_substring] in substrings:
+#                 is_virus = True
+#                 return True
+#                 sys.exit(0)
+#             i += 1
+#     return False
+
+# maybe change order - if any file_substring in virus for file_substring in file_substrings
 def is_virus(file, viruses):
     for virus in viruses:
         virus = get_hex(virus)
-        sizeof_substring = 50
-        substrings = make_substrings(sizeof_substring, virus)
-        i = 0
-        while i < len(file) - sizeof_substring - 1:
-            if file[i:i+sizeof_substring] in substrings:
-                is_virus = True
-                return True
-                sys.exit(0)
-            i += 1
+        substring_size = 50
+        substrings = make_substrings(substring_size, virus)
+        if any(substring in file for substring in substrings):
+            return True
     return False
 
 print(is_virus(download_hex, viruses))
