@@ -41,7 +41,7 @@ def make_substrings(size, filename):
         i+=1
     return substrings
 
-viruses=["virus1.txt", "virus2.txt", "virus2.txt","virus2.txt","virus2.txt","virus2.txt","virus2.txt","virus2.txt","virus2.txt","virus2.txt","virus2.txt","virus3.txt", "try.jpg"]
+viruses=["virus1.txt", "virus2.txt", "virus3.txt", "try.jpg"]
 latest_download = newest_file()
 download_hex = get_hex_compressed(latest_download)
 print(len(download_hex))
