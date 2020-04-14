@@ -60,24 +60,33 @@ def compare(hex_file, hex_virus, sub_size):
 # cause most of them will be different with small substrings, and we only check for bigger
 # substrings when the files are very similar
 # We'll do a lot more work for similar files but it will be exponentially faster for different files
-def is_virus(hex_file, viruses, final_subsize):  #final_subsize has to be carefully evaluated
-    for virus in viruses:
+
+#Let's just compress and get hex of viruses before so that we don't have to do it when a file is downloaded
+#it saves time from donwload to result of virus or not
+viruses_dict = {}
+for virus in viruses :
+    virus_string = get_hex_compressed(virus)
+    viruses_dict[virus] = virus_string
+
+#We're gonna have to put thing in an infinite loop that checks if a file has been downloaded and
+#runs the function if yes
+def is_virus(hex_file, viruses_str, final_subsize):  #final_subsize has to be carefully evaluated
+    for virus in viruses_str:
         print(virus)
         sub_size = 16 # we can start with however small, the smallest just means a little more computing
                       #but faster if file really really different
         go_on = True
-        virus = get_hex_compressed(virus)
         while go_on:
             if sub_size >= final_subsize:
                 return True
-            result = compare(hex_file, virus, sub_size)
+            result = compare(hex_file, viruses_str[virus], sub_size)
             print("compare", sub_size, result)
             if result == False :
                 go_on = False
             sub_size *= 2 # *= whatever we want
     return False
 
-print(is_virus(download_hex, viruses, 200 ))
+print(is_virus(download_hex, viruses_dict, 200 ))
 
 '''
 Our number final_subsize is the threshold from which if a file an han equal substrings of this size with a
