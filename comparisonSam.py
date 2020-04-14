@@ -63,7 +63,7 @@ def compare(hex_file, hex_virus, sub_size):
 def is_virus(hex_file, viruses, final_subsize):  #final_subsize has to be carefully evaluated
     for virus in viruses:
         print(virus)
-        sub_size = 150 # we can start with however small, the smallest just means a little more computing
+        sub_size = 16 # we can start with however small, the smallest just means a little more computing
                       #but faster if file really really different
         go_on = True
         virus = get_hex_compressed(virus)
