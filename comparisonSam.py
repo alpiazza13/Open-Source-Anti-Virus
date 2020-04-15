@@ -1,4 +1,3 @@
-
 import binascii
 import os
 import sys
@@ -72,6 +71,7 @@ for virus in viruses :
 #runs the function if yes
 def is_virus(hex_file, viruses_str, final_subsize):  #final_subsize has to be carefully evaluated
     for virus in viruses_str:
+        print(len(viruses_str[virus]))
         print(virus)
         sub_size = 16 # we can start with however small, the smallest just means a little more computing
                       #but faster if file really really different
@@ -86,10 +86,12 @@ def is_virus(hex_file, viruses_str, final_subsize):  #final_subsize has to be ca
             sub_size *= 2 # *= whatever we want
     return False
 
-print(is_virus(download_hex, viruses_dict, 200 ))
+print(is_virus(download_hex, viruses_dict, 2000 ))
+
 
 '''
 Our number final_subsize is the threshold from which if a file an han equal substrings of this size with a
 virus, then it can be a virus
 200 -> 8kB
+128 * 20 * 2 bytes = about 5kB
 '''
