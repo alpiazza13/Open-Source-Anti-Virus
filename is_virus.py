@@ -2,6 +2,13 @@ import binascii
 import os
 import sys
 import glob
+import random
+
+
+def notify(title, text):
+    os.system("""
+              osascript -e 'display notification "{}" with title "{}"'
+              """.format(text, title))
 
 
 def compress(s):
@@ -14,7 +21,6 @@ def compress(s):
             result += str(s[i])
         i+=1
     return result
-
 
 
 # get the name of the newly downloaded file
@@ -43,29 +49,20 @@ def make_substrings(size, filename):
 viruses=["virus1.txt", "virus2.txt", "virus3.txt", "try.jpg"]
 latest_download = newest_file()
 download_hex = get_hex_compressed(latest_download)
-print(len(download_hex))
-print(latest_download)
 
 def compare(hex_file, hex_virus, sub_size):
-    if sub_size > len(hex_file) or sub_size > len(hex_virus) :
+    if sub_size > len(hex_file) or sub_size > len(hex_virus):
         return False
+    # hex_file_subs = make_substrings(sub_size, hex_file)
+    # if any(hex_sub in hex_virus for hex_sub in hex_file_subs):
+    #     return True
+    # return False
     hex_file_subs = make_substrings(sub_size, hex_file)
-    if any(hex_sub in hex_virus for hex_sub in hex_file_subs):
-        return True
-    return False
+    hex_virus = make_substrings(sub_size, hex_virus)
+    hex_file_subs = set(hex_file_subs)
+    hex_virus = set(hex_virus)
+    return len(hex_file_subs.intersection(hex_virus)) > 0
 
-# different version of line 54 (the line with any) - to use for translating to c++
-# any = False
-# j = 0
-# len_hex_sub = len(hex_file_subs[0])
-# while j < len(hex_file_subs):
-#     hex_sub = hex_file_subs[j]
-#     i = 0
-#     while i < len(hex_virus) - len_hex_sub + 1:
-#         if hex_virus[i:i+len_hex_sub] == hex_sub:
-#             any = True
-#         i += 1
-#     j += 1
 
 # based on idea that smaller substrings make it way faster, we go from ground up
 # cause most of them will be different with small substrings, and we only check for bigger
@@ -74,16 +71,28 @@ def compare(hex_file, hex_virus, sub_size):
 
 #Let's just compress and get hex of viruses before so that we don't have to do it when a file is downloaded
 #it saves time from donwload to result of virus or not
+
+
 viruses_dict = {}
 for virus in viruses :
     virus_string = get_hex_compressed(virus)
     viruses_dict[virus] = virus_string
 
+def generate_str(size):
+    s = ""
+    for x in range(size):
+        s += str(random.randint(0,9))
+    return s
+
+big = generate_str(100000)
+
+viruses_dict["big"] = big
+
+
 #We're gonna have to put thing in an infinite loop that checks if a file has been downloaded and
 #runs the function if yes
 def is_virus(hex_file, viruses_str, final_subsize):  #final_subsize has to be carefully evaluated
     for virus in viruses_str:
-        print(len(viruses_str[virus]))
         print(virus)
         sub_size = 16 # we can start with however small, the smallest just means a little more computing
                       #but faster if file really really different
@@ -98,7 +107,10 @@ def is_virus(hex_file, viruses_str, final_subsize):  #final_subsize has to be ca
             sub_size *= 2 # *= whatever we want
     return False
 
-print(is_virus(download_hex, viruses_dict, 2000 ))
+if is_virus(viruses_dict["big"], viruses_dict, 200):
+    notify("VIRUS ALERT", "this is probably a virus, you should delete it!")
+
+# print(is_virus(viruses_dict["big"], viruses_dict, 2000 ))
 
 
 '''
