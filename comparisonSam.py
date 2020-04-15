@@ -54,6 +54,18 @@ def compare(hex_file, hex_virus, sub_size):
         return True
     return False
 
+# different version of line 54 (the line with any) - to use for translating to c++
+# any = False
+# j = 0
+# len_hex_sub = len(hex_file_subs[0])
+# while j < len(hex_file_subs):
+#     hex_sub = hex_file_subs[j]
+#     i = 0
+#     while i < len(hex_virus) - len_hex_sub + 1:
+#         if hex_virus[i:i+len_hex_sub] == hex_sub:
+#             any = True
+#         i += 1
+#     j += 1
 
 # based on idea that smaller substrings make it way faster, we go from ground up
 # cause most of them will be different with small substrings, and we only check for bigger
