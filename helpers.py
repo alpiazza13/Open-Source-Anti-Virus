@@ -33,3 +33,13 @@ def formating_viruses(viruses):
         virus_string = get_hex_compressed(virus)
         viruses_dict[virus] = virus_string
     return viruses_dict
+
+
+def fit_to_unix(filename):
+    newname = ""
+    for char in filename:
+        if char == " " or char == "(" or char == ")":
+            newname += "\\" + char
+        else :
+            newname += char
+    return newname

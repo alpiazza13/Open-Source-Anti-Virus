@@ -20,9 +20,9 @@ def main():
                 if checkfornew != newest:
                     result = is_virus(get_hex_compressed(checkfornew), viruses_dict, 200)
                     if result == True:
-                        alert("virus")
+                        alert("virus", checkfornew)
                     else:
-                        alert("not_virus")
+                        alert("not_virus", checkfornew)
         if not checkfornew.endswith('.crdownload') and not checkfornew.endswith('.download'):
             newest = checkfornew
         size_folder = new_size_folder

@@ -1,5 +1,7 @@
 import os
 import glob
+import time
+from helpers import fit_to_unix
 
 
 def notify(title, text):
@@ -7,10 +9,13 @@ def notify(title, text):
               osascript -e 'display notification "{}" with title "{}"'
               """.format(text, title))
 
-def alert(status):
+def alert(status, checkfornew):
     if status == "virus":
-        os.system(""" osascript -e 'display dialog "THIS IS PROBABLY A VIRUS! Do you want us to delete the file for you? " buttons {"Yes ","No"} with title "VIRUS CHECK" with icon Stop'
-        """)
+        result = os.popen(""" osascript -e 'display dialog "THIS IS PROBABLY A VIRUS! Do you want us to delete the file for you? " buttons {"Yes","No"} with title "VIRUS CHECK" with icon Stop'
+        """).readlines()
+        print(result)
+        if result == ['button returned:Yes\n']:
+            remove(checkfornew)
     else:
         os.system("""
                     osascript -e 'display dialog "You are all good, this is most likely not a virus" buttons {"OK"} with title "VIRUS CHECK" with icon Note'
@@ -31,3 +36,7 @@ def newest_file():
 # get size of downloads directory
 def size_downloads():
     return len(os.listdir(os.path.expanduser('~')+"/Downloads"))
+
+
+def remove(checkfornew):
+    os.system("rm -rf " + fit_to_unix(checkfornew))
