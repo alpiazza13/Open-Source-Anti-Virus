@@ -8,8 +8,6 @@ import time
 
 
 viruses=["virus1.txt", "virus2.txt", "virus3.txt", "try.jpg"]
-latest_download = newest_file()
-download_hex = get_hex_compressed(latest_download)
 
 viruses_dict = {}
 for virus in viruses:
@@ -43,7 +41,7 @@ def main():
         if new_size_folder >= size_folder:      #check if the new most recent is not due to a deletion
             if not checkfornew.endswith('.crdownload') and not checkfornew.endswith('.download'):
                 if checkfornew != newest:
-                    result = is_virus(download_hex, viruses_dict, 200)
+                    result = is_virus(get_hex_compressed(checkfornew), viruses_dict, 200)
                     if result == True:
                         alert("virus")
                     else:
