@@ -43,7 +43,7 @@ def main():
         if new_size_folder >= size_folder:      #check if the new most recent is not due to a deletion
             if not checkfornew.endswith('.crdownload') and not checkfornew.endswith('.download'):
                 if checkfornew != newest:
-                    result = is_virus(viruses_dict["try.jpg"], viruses_dict, 200)
+                    result = is_virus(download_hex, viruses_dict, 200)
                     if result == True:
                         alert("virus")
                     else:
