@@ -12,6 +12,15 @@ def notify(title, text):
               osascript -e 'display notification "{}" with title "{}"'
               """.format(text, title))
 #
+def alert(status):
+    if status == "virus":
+        os.system(""" osascript -e 'display dialog "THIS IS PROBABLY A VIRUS! Do you want us to delete the file for you? " buttons {"Yes ","No"} with title "VIRUS CHECK" with icon Stop'
+        """)
+    else:
+        os.system("""
+                    osascript -e 'display dialog "You are all good, this is most likely not a virus" buttons {"OK"} with title "VIRUS CHECK" with icon Note'
+        """)
+
 def compress(s):
     i = 0
     result = ""

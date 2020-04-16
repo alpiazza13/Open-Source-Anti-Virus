@@ -3,7 +3,7 @@ import os
 import sys
 import glob
 import random
-from helpers import notify, compare, newest_file, get_hex_compressed, size_downloads
+from helpers import notify, compare, newest_file, get_hex_compressed, size_downloads, alert
 import time
 
 
@@ -43,11 +43,11 @@ def main():
         if new_size_folder >= size_folder:      #check if the new most recent is not due to a deletion
             if not checkfornew.endswith('.crdownload') and not checkfornew.endswith('.download'):
                 if checkfornew != newest:
-                    result = is_virus(checkfornew, viruses_dict, 200)
+                    result = is_virus(viruses_dict["try.jpg"], viruses_dict, 200)
                     if result == True:
-                        notify("VIRUS ALERT", "this is probably a virus, you should delete it!")
+                        alert("virus")
                     else:
-                        notify("VIRUS CHECK", "you are all good, this is not a virus")
+                        alert("not_virus")
         if not checkfornew.endswith('.crdownload') and not checkfornew.endswith('.download'):
             newest = checkfornew
         size_folder = new_size_folder
