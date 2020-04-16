@@ -1,18 +1,19 @@
-import binascii
-import os
-import sys
-import glob
-import random
-from helpers import notify, compare, newest_file, get_hex_compressed, size_downloads, alert
-import time
+from helpers import make_substrings
+
+def compare(hex_file, hex_virus, sub_size):
+    if sub_size > len(hex_file) or sub_size > len(hex_virus):
+        return False
+    # hex_file_subs = make_substrings(sub_size, hex_file)
+    # if any(hex_sub in hex_virus for hex_sub in hex_file_subs):
+    #     return True
+    # return False
+    hex_file_subs = make_substrings(sub_size, hex_file)
+    hex_virus = make_substrings(sub_size, hex_virus)
+    hex_file_subs = set(hex_file_subs)
+    hex_virus = set(hex_virus)
+    return len(hex_file_subs.intersection(hex_virus)) > 0
 
 
-viruses=["virus1.txt", "virus2.txt", "virus3.txt", "try.jpg"]
-
-viruses_dict = {}
-for virus in viruses:
-    virus_string = get_hex_compressed(virus)
-    viruses_dict[virus] = virus_string
 
 #check if hex_file is a virus
 def is_virus(hex_file, viruses_str, final_subsize):  #final_subsize has to be carefully evaluated
@@ -31,30 +32,7 @@ def is_virus(hex_file, viruses_str, final_subsize):  #final_subsize has to be ca
     return False
 
 
-def main():
-    os.system("""osascript -e 'display dialog "You just opened VIRUS DETECTION
-We will tell you whenver we think you donwloaded a virus
-No need to worry about this anymore" buttons {"OK"} with title "VIRUS DETECTION APP"
-'""")
-    newest = newest_file()
-    size_folder = size_downloads()
-    while True:
-        checkfornew = newest_file()
-        new_size_folder = size_downloads()
-        time.sleep(0.5)
-        if new_size_folder >= size_folder:      #check if the new most recent is not due to a deletion
-            if not checkfornew.endswith('.crdownload') and not checkfornew.endswith('.download'):
-                if checkfornew != newest:
-                    result = is_virus(get_hex_compressed(checkfornew), viruses_dict, 200)
-                    if result == True:
-                        alert("virus")
-                    else:
-                        alert("not_virus")
-        if not checkfornew.endswith('.crdownload') and not checkfornew.endswith('.download'):
-            newest = checkfornew
-        size_folder = new_size_folder
 
-main()
 
 '''
 Our number final_subsize is the threshold from which if a file an han equal substrings of this size with a
