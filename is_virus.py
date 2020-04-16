@@ -47,9 +47,7 @@ def main():
                     if result == True:
                         notify("VIRUS ALERT", "this is probably a virus, you should delete it!")
                     else:
-                        os.system("""
-                                  osascript -e 'display notification "You are all good" with title "VIRUS CHECK"'
-                                  """)
+                        notify("VIRUS CHECK", "you are all good, this is not a virus")
         if not checkfornew.endswith('.crdownload') and not checkfornew.endswith('.download'):
             newest = checkfornew
         size_folder = new_size_folder
