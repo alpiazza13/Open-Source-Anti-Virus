@@ -32,6 +32,10 @@ def is_virus(hex_file, viruses_str, final_subsize):  #final_subsize has to be ca
 
 
 def main():
+    os.system("""osascript -e 'display dialog "You just opened VIRUS DETECTION
+We will tell you whenver we think you donwloaded a virus
+No need to worry about this anymore" buttons {"OK"} with title "VIRUS DETECTION APP"
+'""")
     newest = newest_file()
     size_folder = size_downloads()
     while True:
