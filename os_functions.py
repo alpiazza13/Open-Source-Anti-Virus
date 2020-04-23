@@ -4,6 +4,28 @@ import time
 from helpers import fit_to_unix
 
 
+
+def security(checkfornew):
+    check1 = check_item(checkfornew,"/-")
+    check2 = check_item(checkfornew,"~")
+    check3 = check_item(checkfornew,"..")
+    check4 = check_item(checkfornew,"*")
+    check5 = secure_path(checkfornew)
+    check6 = check_item(checkfornew,"$")
+    check7 = check_item(checkfornew,":")
+    if check1 and check2 and check3 and check4 and check5 and check6 and check7:
+        return True
+    else :
+        return False
+
+def remove(checkfornew):
+    #security layer
+    if security(checkfornew):
+        # i don't know the inner workings of os.remove so i treated it
+        # and secured it as if it was the "rm" unix command to be safe.
+        # Even if it might not be necessary, it doesn't hurt
+        os.remove(checkfornew)
+
 def notify(title, text):
     os.system("""
               osascript -e 'display notification "{}" with title "{}"'
