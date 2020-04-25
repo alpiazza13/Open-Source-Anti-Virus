@@ -46,7 +46,7 @@ class MenuBar(rumps.App):
             self.p1.join()
         rumps.quit_application()
 
-# Startup of Single-Use File App
+# Startup of Anti-virus File App
 dialogs.intro()
 if __name__ == "__main__":
     app = MenuBar("Anti-🦠", quit_button=None)
