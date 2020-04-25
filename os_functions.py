@@ -2,7 +2,7 @@ import os
 import glob
 import time
 from helpers import fit_to_unix
-
+import dialogs
 
 # check that the path is correct up to Downloads
 def secure_path(checkfornew):
@@ -33,6 +33,7 @@ def security(checkfornew):
     else :
         return False
 
+
 def remove(checkfornew):
     #security layer
     if security(checkfornew):
@@ -41,28 +42,15 @@ def remove(checkfornew):
         # Even if it might not be necessary, it doesn't hurt
         os.remove(checkfornew)
 
-def notify(title, text):
-    os.system("""
-              osascript -e 'display notification "{}" with title "{}"'
-              """.format(text, title))
 
 def alert(status, checkfornew):
     if status == "virus":
-        result = os.popen(""" osascript -e 'display dialog "THIS IS PROBABLY A VIRUS! Do you want us to delete the file for you? " buttons {"Yes","No"} with title "VIRUS CHECK" with icon Stop'
-        """).readlines()
-        print(result)
+        result = dialogs.virus_dialog()
         if result == ['button returned:Yes\n']:
             remove(checkfornew)
     else:
-        os.system("""
-                    osascript -e 'display dialog "You are all good, this is most likely not a virus" buttons {"OK"} with title "VIRUS CHECK" with icon Note'
-        """)
+        dialogs.all_good_dialog()
 
-def intro():
-    os.system("""osascript -e 'display dialog "You just opened VIRUS DETECTION
-    We will tell you whenver we think you donwloaded a virus
-    No need to worry about this anymore" buttons {"OK"} with title "VIRUS DETECTION APP"
-    '""")
 
 # get name of most recent file in downloads
 def newest_file():
