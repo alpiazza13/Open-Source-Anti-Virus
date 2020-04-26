@@ -3,6 +3,15 @@ from os_functions import alert, newest_file, size_downloads
 from is_virus import is_virus
 from helpers import formating_viruses, get_hex_compressed
 
+'''
+
+To get the viruses for the online github repo, we need to do the following
+When we eventually link, we have to make sure clonning the virus is something safe to do!!!!
+
+from get_viruses import get_viruses_github
+viruses = get_viruses_github()
+
+'''
 viruses = ["viruses/virus1.txt", "viruses/virus2.txt", "viruses/virus3.txt", "viruses/try.jpg"]
 
 viruses_dict = formating_viruses(viruses)
