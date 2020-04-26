@@ -40,7 +40,7 @@ def pause_dialog():
 def wrong_pause():
     pync.notify("Warning: You have not started the app, you cannot pause it.", title="Anti-Virus App")
 
-def clonning_dialog():
+def cloning_dialog():
     pync.notify("Warning: We had a problem downloading our test viruses, please check your internet connection", title="Anti-Virus App")
 
 def file_dialog():

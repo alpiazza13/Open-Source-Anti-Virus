@@ -1,6 +1,6 @@
 import os
 import shutil
-from dialogs import clonning_dialog
+from dialogs import cloning_dialog
 
 
 def get_viruses_github():
@@ -16,7 +16,7 @@ def get_viruses_github():
         #only returns the files
         virus_list = [f for f in os.listdir(mypath) if os.path.isfile(os.path.join(mypath, f))]
     except FileNotFoundError:
-        clonning_dialog()
+        cloning_dialog()
 
     new_list = []
     for virus in virus_list:
