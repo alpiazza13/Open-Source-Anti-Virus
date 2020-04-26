@@ -1,4 +1,5 @@
 import binascii
+import os
 
 def compress(s):
     i = 0
@@ -11,12 +12,12 @@ def compress(s):
 
 #get a string of hexadecimals of a file
 def get_hex_compressed(filename):
-    with open(filename, 'rb') as f:
-        content = f.read()
-    hex1 = compress(binascii.hexlify(content))
-    str_hex = str(hex1)[2:-1] # get rid of first 2 and last 1 characters
-    return str_hex
-
+    file_bin = open(filename, 'rb')
+    file_content = file_bin.read()
+    #hex_dump = file_content.hex()
+    hex_dump = binascii.hexlify(file_content)
+    compressed_hex_dump = compress(hex_dump)
+    return compressed_hex_dump
 
 def make_substrings(size, filename):
     i = 0
@@ -26,15 +27,6 @@ def make_substrings(size, filename):
         i+=1
     return substrings
 
-
-def formating_viruses(viruses):
-    viruses_dict = {}
-    for virus in viruses:
-        virus_string = get_hex_compressed(virus)
-        viruses_dict[virus] = virus_string
-    return viruses_dict
-
-
 def fit_to_unix(filename):
     newname = ""
     for char in filename:
@@ -43,3 +35,17 @@ def fit_to_unix(filename):
         else :
             newname += char
     return newname
+
+# unpack nested directories to obtain all files -- will be useful for scanning files in folders
+def unpack_folder(directory):
+    all_dir_files = [] 
+    try:
+        dir_files = os.walk(directory)
+        for each_folder in list(dir_files):
+            for each_file in each_folder[2]:
+                full_dir = "{}/{}".format(each_folder[0],each_file)
+                if os.path.isfile(full_dir):
+                    all_dir_files.append(full_dir)
+        return all_dir_files
+    except:
+        return all_dir_files
