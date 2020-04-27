@@ -1,14 +1,19 @@
 import time
 import os
+import requests
 from os_functions import alert, newest_file, size_downloads
 from is_virus import is_virus
 from helpers import get_hex_compressed, unpack_folder
 
 
-# generating virus dictionary. This is saved to file as a json instead to save time. Look at example
-viruses_fileobj = open('viruses/viruses.json','r')
-viruses_dict = viruses_fileobj.read()
-viruses_dict = eval(viruses_dict)
+# viruses = ["viruses/virus1.txt", "viruses/virus2.txt", "viruses/virus3.txt", "viruses/try.jpg"]
+# viruses_dict = formating_viruses(viruses)
+
+# making http request to repo that lives on Sam's account to get JSON of viruses
+file_url = "https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus/raw/master/viruses/viruses.json"
+req = requests.get(file_url)
+res = req.json()
+viruses_dict = res
 
 '''
 To get the viruses for the online github repo, we need to do the following
@@ -17,8 +22,7 @@ When we eventually link, we have to make sure clonning the virus is something sa
 from get_viruses import get_viruses_github
 viruses = get_viruses_github()
 '''
-# viruses = ["viruses/virus1.txt", "viruses/virus2.txt", "viruses/virus3.txt", "viruses/try.jpg"]
-# viruses_dict = formating_viruses(viruses)
+
 
 def main_loop():
     newest = newest_file()
