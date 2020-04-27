@@ -12,7 +12,7 @@ def compress(s):
 
 #get a string of hexadecimals of a file
 def get_hex_compressed(filename):
-    file_bin = open(filename, 'rb')
+    file_bin = open(filename, 'r')
     file_content = file_bin.read()
     #hex_dump = file_content.hex()
     hex_dump = binascii.hexlify(file_content)
