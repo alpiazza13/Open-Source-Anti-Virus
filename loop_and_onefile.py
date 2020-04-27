@@ -35,9 +35,11 @@ def main_loop():
                     result = is_virus(get_hex_compressed(checkfornew), viruses_dict, 200)
                     if result == True:
                         alert("virus", checkfornew)
+                    # else:
+                    #     alert("not_virus", checkfornew)
                     # else no need to bother user if file is not virus
 
-            # if newest thing is a folder (hopefully an unzipped one)                    
+            # if newest thing is a folder (hopefully an unzipped one)
             elif os.path.isdir(checkfornew):
                 if checkfornew != newest:
                     files_to_scan = unpack_folder(checkfornew)
@@ -48,6 +50,8 @@ def main_loop():
                     # alert if any is True
                     if any(file_status):
                         alert("virus", checkfornew)
+                    # else:
+                    #     alert("not_virus", checkfornew)
 
         if not checkfornew.endswith('.crdownload') and not checkfornew.endswith('.download'):
             newest = checkfornew

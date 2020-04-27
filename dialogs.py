@@ -2,13 +2,15 @@ import os
 import pync
 
 def intro():
-    os.system("""osascript -e 'display dialog "You just opened VIRUS DETECTION
-We will tell you whenver we think you donwloaded a virus
-No need to worry about this anymore
+    os.system("""osascript -e 'display dialog "Welcome to Virus Detection!
 
-You will see the app in you Menu Bar at the top of your screen.
-Click Start in the Menu Bar to start the app.
-With the Single File Check option, you can check if a file you already have on your computer is a virus or not." buttons {"OK"} default button "OK" with title "VIRUS DETECTION APP"
+We will monitor everything that enters your downloads folder and notify you whenever we think you downloaded a virus.
+
+You will see the app in you Menu Bar at the top of your screen with the label Anti-🦠.
+
+YOU MUST CLICK START IN THE MENU BAR TO START THE APP!!!
+
+With the Single File Check option, you can select any file from your computer and we will check whether it is a virus." buttons {"OK"} default button "OK" with title "VIRUS DETECTION APP"
     '""")
 
 def notify(title, text):
@@ -22,26 +24,36 @@ def virus_dialog():
     return result
 
 def all_good_dialog():
-    pync.notify("You are all good, this is most likely not a virus", title="Anti-Virus App")
+    pync.notify("All good - this is most likely not a virus", title="Anti-Virus App")
 
 def help_dialog():
-    os.system("""osascript -e 'display dialog "{This app was created by Alex Piazza, Kevin Koech, Samuel Javal and Jeremy Kattan in April 2020}" buttons {"OK"} default button "OK" with title "Anti-Virus App - Help/About"
+    os.system("""osascript -e 'display dialog "Welcome to VIRUS DETECTION
+
+We will monitor everything that enters your downloads folder and notify you whenever we think you downloaded a virus.
+
+You will see the app in you Menu Bar at the top of your screen with the label Anti-🦠.
+
+YOU MUST CLICK START IN THE MENU BAR TO START THE APP!!!
+
+With the Single File Check option, you can select any file from your computer and we will check whether it is a virus.
+
+{This app was created by Alex Piazza, Kevin Koech, Samuel Javal and Jeremy Kattan in April 2020}" buttons {"OK"} default button "OK" with title "Anti-Virus App - Help/About"
 '""")
 
 def start_dialog():
-    pync.notify("You successfully started the app. It is now running.", title="Anti-Virus App")
+    pync.notify("App successfully started - virus detection is now running.", title="Anti-Virus App")
 
 def already_started():
-    pync.notify("Warning: You already started the app, you cannot start it again.", title="Anti-Virus App")
+    pync.notify("App already running, it's pointless to start it again ", title="Anti-Virus App")
 
 def pause_dialog():
-    pync.notify("You successfully paused the app.", title="Anti-Virus App")
+    pync.notify("App paused", title="Anti-Virus App")
 
 def wrong_pause():
-    pync.notify("Warning: You have not started the app, you cannot pause it.", title="Anti-Virus App")
+    pync.notify("App is not currently running, so why would you pause it?", title="Anti-Virus App")
 
 def cloning_dialog():
-    pync.notify("Warning: We had a problem downloading our test viruses, please check your internet connection", title="Anti-Virus App")
+    pync.notify("Warning: There was a problem accessing the data we need to check for viruses, please check your internet connection", title="Anti-Virus App")
 
 def file_dialog():
     result = os.popen("""osascript -e 'choose file' """).readlines()
