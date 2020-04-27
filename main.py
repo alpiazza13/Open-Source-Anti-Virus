@@ -2,6 +2,7 @@ from loop_and_onefile import main_loop, one_file
 import multiprocessing as mp
 import rumps
 import dialogs
+from os_functions import open_github
 
 # This is the class defining the Mac MenuBar item which is the main user
 # interface and center of the app
@@ -39,6 +40,10 @@ class MenuBar(rumps.App):
         self.p2 = mp.Process(target=one_file, args = (result,))
         self.p2.start()
 
+    @rumps.clicked("Help us! Share a Virus")
+    def share(self, _):
+        open_github()
+
     @rumps.clicked("Quit App")
     def quit_app(self, _):
         if self.started == True:
@@ -50,4 +55,16 @@ class MenuBar(rumps.App):
 dialogs.intro()
 if __name__ == "__main__":
     app = MenuBar("Anti-🦠", quit_button=None)
+    app.menu = [
+    "Help/About",
+    None,
+    "Start",
+    "Pause",
+    None,
+    "Single File Check",
+    None,
+    "Help us! Share a Virus",
+    None,
+    "Quit App",
+    ]
     app.run()

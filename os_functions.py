@@ -3,6 +3,8 @@ import glob
 import time
 from helpers import fit_to_unix
 import dialogs
+import webbrowser
+
 
 # check that the path is correct up to Downloads
 def secure_path(checkfornew):
@@ -65,3 +67,8 @@ def size_downloads():
 
 def remove(checkfornew):
     os.system("rm -rf " + fit_to_unix(checkfornew))
+
+
+def open_github():
+    url = "https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus"
+    webbrowser.open_new_tab(url)
