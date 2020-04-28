@@ -4,6 +4,7 @@ import requests
 from os_functions import alert, newest_file, size_downloads
 from is_virus import is_virus
 from helpers import get_hex_compressed, unpack_folder
+import dialogs
 
 
 # viruses = ["viruses/virus1.txt", "viruses/virus2.txt", "viruses/virus3.txt", "viruses/try.jpg"]
@@ -12,6 +13,8 @@ from helpers import get_hex_compressed, unpack_folder
 # making http request to repo that lives on Sam's account to get JSON of viruses
 # file_url = "https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus/raw/master/viruses/viruses_compressed.json"
 # req = requests.get(file_url)
+
+
 big_file_url = "https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus/raw/master/viruses/all_viruses_compressed.json"
 req = requests.get(big_file_url)
 res = req.json()
@@ -62,6 +65,7 @@ def main_loop():
         size_folder = new_size_folder
 
 def one_file(filename):
+    dialogs.checking()
     result = is_virus(get_hex_compressed(filename), viruses_dict, 200)
     if result == True:
         alert("virus", filename)

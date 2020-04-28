@@ -67,3 +67,7 @@ def size_downloads():
 def open_github():
     url = "https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus"
     webbrowser.open_new_tab(url)
+
+def show_code():
+    url = "https://github.com/alpiazza13/Open-Source-Anti-Virus"
+    webbrowser.open_new_tab(url)
