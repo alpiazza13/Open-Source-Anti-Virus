@@ -1,4 +1,5 @@
 from loop_and_onefile import main_loop, one_file
+from loop_and_onefile_v2 import main_loop_v2, one_file_v2
 import multiprocessing as mp
 import rumps
 import dialogs
@@ -19,6 +20,7 @@ class MenuBar(rumps.App):
         if self.started == 0:
             dialogs.start_dialog()
             self.p1 = mp.Process(target=main_loop)
+            # self.p1 = mp.Process(target=main_loop_v2) #to initialize the second method of detecting viruses 
             self.p1.start()
             self.started = 1
         else :
@@ -38,6 +40,7 @@ class MenuBar(rumps.App):
     def set_time(self, _):
         result = dialogs.file_dialog()
         self.p2 = mp.Process(target=one_file, args = (result,))
+        # self.p2 = mp.Process(target=one_file_v2, args = (result,)) #to initialize the second method of detecting viruses
         self.p2.start()
 
     @rumps.clicked("Help us! Share a Virus")
