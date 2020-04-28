@@ -64,11 +64,6 @@ def newest_file():
 def size_downloads():
     return len(os.listdir(os.path.expanduser('~')+"/Downloads"))
 
-
-def remove(checkfornew):
-    os.system("rm -rf " + fit_to_unix(checkfornew))
-
-
 def open_github():
     url = "https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus"
     webbrowser.open_new_tab(url)
