@@ -2,7 +2,7 @@ import time
 import os
 import requests
 from os_functions import alert, newest_file, size_downloads
-from is_virus import is_virus
+from is_virus import is_virus_v2
 from helpers import get_hex_compressed, unpack_folder
 
 
@@ -10,7 +10,7 @@ from helpers import get_hex_compressed, unpack_folder
 # viruses_dict = formating_viruses(viruses)
 
 # making http request to repo that lives on Sam's account to get JSON of viruses
-file_url = "https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus/raw/master/viruses/viruses_compressed.json"
+file_url = "https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus/raw/master/viruses/viruses_full.json"
 req = requests.get(file_url)
 res = req.json()
 viruses_dict = res
@@ -23,8 +23,7 @@ from get_viruses import get_viruses_github
 viruses = get_viruses_github()
 '''
 
-
-def main_loop():
+def main_loop_v2():
     newest = newest_file()
     size_folder = size_downloads()
     while True:
@@ -36,21 +35,20 @@ def main_loop():
             # making sure latest file is actually a file (and not a folder moved from somewhere else to downloads) and isn't a .crdownload or .download file
             if os.path.isfile(checkfornew) and not file_extension in ['.crdownload','.download','.zip']:
                 if checkfornew != newest:
-                    result = is_virus(get_hex_compressed(checkfornew), viruses_dict, 200)
-                    if result == True:
+                    result = is_virus_v2(checkfornew, viruses_dict)
+                    if result:
                         alert("virus", checkfornew)
                     else:
                         alert("not_virus", checkfornew)
-                    # else no need to bother user if file is not virus
 
             # if newest thing is a folder (hopefully an unzipped one)
             elif os.path.isdir(checkfornew):
                 if checkfornew != newest:
                     files_to_scan = unpack_folder(checkfornew)
                     for each in files_to_scan:
-                        status = is_virus(get_hex_compressed(each), viruses_dict, 200)
+                        result = is_virus_v2(each, viruses_dict)
                         # if any is a virus, alert
-                        if status:
+                        if result:
                             alert("virus", checkfornew)
                     else:
                         alert("not_virus", checkfornew)
@@ -59,8 +57,8 @@ def main_loop():
             newest = checkfornew
         size_folder = new_size_folder
 
-def one_file(filename):
-    result = is_virus(get_hex_compressed(filename), viruses_dict, 200)
+def one_file_v2(filename):
+    result = is_virus_v2(filename, viruses_dict)
     if result == True:
         alert("virus", filename)
     else:
