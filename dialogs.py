@@ -55,6 +55,10 @@ def wrong_pause():
 def cloning_dialog():
     pync.notify("Warning: There was a problem accessing the data we need to check for viruses, please check your internet connection", title="Anti-Virus App")
 
+def wait():
+    pync.notify("Loading files... Please wait until you see the App in the Menu Bar. If slow, check internet connection.", title="Anti-Virus App")
+
+
 def file_dialog():
     result = os.popen("""osascript -e 'choose file' """).readlines()
     if result != []:

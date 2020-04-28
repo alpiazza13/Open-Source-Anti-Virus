@@ -1,5 +1,3 @@
-from loop_and_onefile import main_loop, one_file
-from loop_and_onefile_v2 import main_loop_v2, one_file_v2
 import multiprocessing as mp
 import rumps
 import dialogs
@@ -58,6 +56,12 @@ class MenuBar(rumps.App):
 dialogs.intro()
 if __name__ == "__main__":
     app = MenuBar("Anti-🦠", quit_button=None)
+    dialogs.wait()
+
+    # this will start  loading the viruses, can take some time 
+    from loop_and_onefile import main_loop, one_file
+    from loop_and_onefile_v2 import main_loop_v2, one_file_v2
+
     app.start(0)
     app.menu = [
     "Start",
