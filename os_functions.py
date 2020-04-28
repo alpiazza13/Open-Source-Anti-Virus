@@ -2,8 +2,8 @@ import os
 import glob
 import time
 from helpers import fit_to_unix
-import dialogs
 import webbrowser
+import dialogs
 
 
 # check that the path is correct up to Downloads

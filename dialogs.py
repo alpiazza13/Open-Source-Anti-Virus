@@ -58,7 +58,7 @@ def cloning_dialog():
 def wait():
     pync.notify("Loading files... Please wait until you see the App in the Menu Bar. If slow, check internet connection.", title="Anti-Virus App")
 
-def checking():
+def checking_dialog():
     pync.notify("Checking the file...", title="Anti-Virus App")
 
 def file_dialog():

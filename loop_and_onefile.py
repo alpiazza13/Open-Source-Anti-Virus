@@ -65,7 +65,7 @@ def main_loop():
         size_folder = new_size_folder
 
 def one_file(filename):
-    dialogs.checking()
+    dialogs.checking_dialog()
     result = is_virus(get_hex_compressed(filename), viruses_dict, 200)
     if result == True:
         alert("virus", filename)

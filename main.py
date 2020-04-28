@@ -41,11 +41,11 @@ class MenuBar(rumps.App):
         # self.p2 = mp.Process(target=one_file_v2, args = (result,)) #to initialize the second method of detecting viruses
         self.p2.start()
 
-    @rumps.clicked("More","Help us! Share a Virus")
+    @rumps.clicked("More", "Help us! Share a Virus")
     def share(self, _):
         open_github()
 
-    @rumps.clicked("More","Peek at the Code")
+    @rumps.clicked("More", "Peek at the Code")
     def code(self,_):
         show_code()
 
