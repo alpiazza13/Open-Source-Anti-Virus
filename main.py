@@ -11,12 +11,12 @@ class MenuBar(rumps.App):
 
     started = 0       # will be 1 or 0, 1 when the app is running, 0 when it is paused
 
-    @rumps.clicked("Help/About")
+    @rumps.clicked("More","Help/About")
     def help_about(self, _):
         dialogs.help_dialog()
 
     @rumps.clicked("Start")
-    def start(self, _):
+    def start(self, sender):
         if self.started == 0:
             dialogs.start_dialog()
             self.p1 = mp.Process(target=main_loop)
@@ -36,14 +36,14 @@ class MenuBar(rumps.App):
         else :
             dialogs.wrong_pause()
 
-    @rumps.clicked("Single File Check")
+    @rumps.clicked("More","Single File Check")
     def set_time(self, _):
         result = dialogs.file_dialog()
         self.p2 = mp.Process(target=one_file, args = (result,))
         # self.p2 = mp.Process(target=one_file_v2, args = (result,)) #to initialize the second method of detecting viruses
         self.p2.start()
 
-    @rumps.clicked("Help us! Share a Virus")
+    @rumps.clicked("More","Help us! Share a Virus")
     def share(self, _):
         open_github()
 
@@ -58,15 +58,12 @@ class MenuBar(rumps.App):
 dialogs.intro()
 if __name__ == "__main__":
     app = MenuBar("Anti-🦠", quit_button=None)
+    app.start(0)
     app.menu = [
-    "Help/About",
-    None,
     "Start",
     "Pause",
     None,
-    "Single File Check",
-    None,
-    "Help us! Share a Virus",
+    ["More",["Help/About","Single File Check","Help us! Share a Virus"]],
     None,
     "Quit App",
     ]
