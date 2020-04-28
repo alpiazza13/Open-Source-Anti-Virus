@@ -20,7 +20,7 @@ class MenuBar(rumps.App):
         if self.started == 0:
             dialogs.start_dialog()
             self.p1 = mp.Process(target=main_loop)
-            # self.p1 = mp.Process(target=main_loop_v2) #to initialize the second method of detecting viruses 
+            # self.p1 = mp.Process(target=main_loop_v2) #to initialize the second method of detecting viruses
             self.p1.start()
             self.started = 1
         else :
@@ -49,7 +49,7 @@ class MenuBar(rumps.App):
 
     @rumps.clicked("Quit App")
     def quit_app(self, _):
-        if self.started == True:
+        if self.started == 1:
             self.p1.terminate()
             self.p1.join()
         rumps.quit_application()
