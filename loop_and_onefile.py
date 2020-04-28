@@ -10,8 +10,9 @@ from helpers import get_hex_compressed, unpack_folder
 # viruses_dict = formating_viruses(viruses)
 
 # making http request to repo that lives on Sam's account to get JSON of viruses
-file_url = "https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus/raw/master/viruses/viruses_compressed.json"
-req = requests.get(file_url)
+# file_url = "https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus/raw/master/viruses/viruses_compressed.json"
+big_file_url = "https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus/raw/master/viruses/all_viruses_compressed.json"
+req = requests.get(big_file_url)
 res = req.json()
 viruses_dict = res
 
