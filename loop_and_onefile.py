@@ -5,6 +5,8 @@ from os_functions import alert, newest_file, size_downloads
 from is_virus import is_virus
 from helpers import get_hex_compressed, unpack_folder
 import dialogs
+import io
+import zipfile
 
 # Alternative ways of reading combined virus files
 '''
