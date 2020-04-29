@@ -29,7 +29,7 @@ req = requests.get(file_url)
 zipped_file = zipfile.ZipFile(io.BytesIO(req.content))
 unzipped_file = zipped_file.read('all_viruses_compressed.json')
 # eval() evaluates string to dict and .decode decodes bytes object to string 
-virus_dict = eval(unzipped_file.decode('utf-8'))
+viruses_dict = eval(unzipped_file.decode('utf-8'))
 
 def main_loop_v2():
     newest = newest_file()
