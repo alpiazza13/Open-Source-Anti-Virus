@@ -25,8 +25,9 @@ def split_dict(d, n):
         dicts.append(this_dict)
 
     return dicts
-
+#
 # a_dict = {number: number for number in range(11)}
+# print(a_dict)
 # print(split_dict(a_dict, 2))
 
 def compress(s):

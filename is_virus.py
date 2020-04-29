@@ -1,4 +1,5 @@
-from helpers import make_substrings, get_hex_compressed, md5_filehash
+from helpers import make_substrings, get_hex_compressed, md5_filehash, split_dict
+import multiprocessing as mp
 
 def compare(hex_file, hex_virus, sub_size):
     if sub_size > len(hex_file) or sub_size > len(hex_virus):
@@ -15,24 +16,60 @@ def compare(hex_file, hex_virus, sub_size):
 
 
 
-#check if hex_file is a virus
-def is_virus(hex_file, viruses_str, final_subsize):  #final_subsize has to be carefully evaluated
-    # i = 0
-    for virus in viruses_str:
-        # i+=1
-        # print(i)
-        # print(virus)
+# check if hex_file is a virus
+# for no multiprocessing
+def is_virus(hex_file, viruses, final_subsize):  #final_subsize has to be carefully evaluated
+    for virus in viruses:
         sub_size = 16 #arbitrary small number
         go_on = True
         while go_on:
             if sub_size >= final_subsize:
                 return True
-            result = compare(hex_file, viruses_str[virus]["hexdump"], sub_size)
+            result = compare(hex_file, viruses[virus]["hexdump"], sub_size)
             # print("compare", sub_size, result)
             if result == False:
                 go_on = False
             sub_size = sub_size * 2 # kind of arbitrary
     return False
+
+#multiprocessing version
+def is_virus_multi(hex_file, viruses, final_subsize, return_dict, process_nb):  #final_subsize has to be carefully evaluated
+    final_result = False
+    for virus in viruses:
+        sub_size = 16 #arbitrary small number
+        go_on = True
+        while go_on:
+            if sub_size >= final_subsize:
+                final_result = True
+            result = compare(hex_file, viruses[virus]["hexdump"], sub_size)
+            # print("compare", sub_size, result)
+            if result == False:
+                go_on = False
+            sub_size = sub_size * 2 # kind of arbitrary
+    return_dict[str(process_nb)] = final_result
+
+
+def multiprocess_check(hex_file, viruses, final_subsize):
+    manager = mp.Manager()
+    return_dict = manager.dict()
+    list_processes = []
+    viruses_divided = split_dict(viruses,5)  #5 should maybe be a variable
+    # starting processes
+    process_nb = 0
+    for portion in viruses_divided:
+        p = mp.Process(target=is_virus_multi, args = (hex_file, portion, final_subsize, return_dict, process_nb,))
+        list_processes.append(p)
+        p.start()
+        process_nb += 1
+    # waiting for all processes to be done
+    for portion in list_processes:
+        portion.join()
+
+    if True in return_dict.values():
+        return True
+    else :
+        return False
+
 
 '''
 Our number final_subsize is the threshold from which if a file an han equal substrings of this size with a
