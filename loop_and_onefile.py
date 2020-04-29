@@ -19,6 +19,8 @@ big_file_url = "https://github.com/samueljaval/List-of-viruses-for-Open-Source-A
 req = requests.get(big_file_url)
 res = req.json()
 viruses_dict = res
+print(len(viruses_dict))
+# print(viruses_dict.keys())
 
 '''
 To get the viruses for the online github repo, we need to do the following
