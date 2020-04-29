@@ -1,19 +1,24 @@
 import time
 import os
+import io
 import requests
 from os_functions import alert, newest_file, size_downloads
 from is_virus import is_virus_v2
 from helpers import get_hex_compressed, unpack_folder
+import zipfile
 
 
 # viruses = ["viruses/virus1.txt", "viruses/virus2.txt", "viruses/virus3.txt", "viruses/try.jpg"]
 # viruses_dict = formating_viruses(viruses)
 
 # making http request to repo that lives on Sam's account to get JSON of viruses
-file_url = "https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus/raw/master/viruses/viruses_full.json"
+file_url = "https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus/raw/master/viruses/all_viruses_compressed.json.zip"
 req = requests.get(file_url)
-res = req.json()
-viruses_dict = res
+
+zipped_file = zipfile.ZipFile(io.BytesIO(req.content))
+unzipped_file = zipped_file.read('all_viruses_compressed.json')
+# eval() evaluates string to dict and .decode decodes bytes object to string 
+virus_dict = eval(unzipped_file.decode('utf-8'))
 
 '''
 To get the viruses for the online github repo, we need to do the following

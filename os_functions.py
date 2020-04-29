@@ -42,8 +42,12 @@ def remove(checkfornew):
         # i don't know the inner workings of os.remove so i treated it
         # and secured it as if it was the "rm" unix command to be safe.
         # Even if it might not be necessary, it doesn't hurt
-        os.remove(checkfornew)
-
+        if os.path.isfile(checkfornew):
+            os.remove(checkfornew)
+            
+        # if new thing is directory
+        elif os.path.isdir(checkfornew):
+            os.rmdir(checkfornew)
 
 def alert(status, checkfornew):
     if status == "virus":
