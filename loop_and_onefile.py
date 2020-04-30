@@ -7,7 +7,7 @@ from helpers import get_hex_compressed, unpack_folder
 import dialogs
 import io
 import zipfile
-import time
+# import time
 # Alternative ways of reading combined virus files
 '''
 viruses = ["viruses/virus1.txt", "viruses/virus2.txt", "viruses/virus3.txt", "viruses/try.jpg"]
@@ -70,7 +70,7 @@ def main_loop():
         size_folder = new_size_folder
 
 def one_file(filename):
-    start = time.time()
+    # start = time.time()
     dialogs.checking_dialog()
     # result = is_virus(get_hex_compressed(filename), viruses_dict, 200)
     result = multiprocess_check(get_hex_compressed(filename), viruses_dict, 200)
@@ -78,4 +78,4 @@ def one_file(filename):
         alert("virus", filename)
     else:
         alert("not_virus", filename)
-    print('It took', time.time()-start, 'seconds.')
+    # print('It took', time.time()-start, 'seconds.')

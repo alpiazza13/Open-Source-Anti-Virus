@@ -35,7 +35,7 @@ class MenuBar(rumps.App):
             dialogs.wrong_pause()
 
     @rumps.clicked("More","Single File Check")
-    def set_time(self, _):
+    def single_file_check(self, _):
         result = dialogs.file_dialog()
         self.p2 = mp.Process(target=one_file, args = (result,))
         # self.p2 = mp.Process(target=one_file_v2, args = (result,)) #to initialize the second method of detecting viruses
