@@ -23,8 +23,7 @@ class MenuBar(rumps.App):
             if detection_method == "v1":
                 self.p1 = mp.Process(target=main_loop)
             elif detection_method == "v2":
-                self.p1 = mp.Process(target=main_loop)
-            self.p1 = mp.Process(target=main_loop_v2) #to initialize the second method of detecting viruses
+                self.p1 = mp.Process(target=main_loop_v2) #to initialize the second method of detecting viruses
             self.p1.start()
             self.started = 1
         else :
@@ -43,8 +42,10 @@ class MenuBar(rumps.App):
     @rumps.clicked("More","Single File Check")
     def single_file_check(self, _):
         result = dialogs.file_dialog()
-        # self.p2 = mp.Process(target=one_file, args = (result,))
-        self.p2 = mp.Process(target=one_file_v2, args = (result,)) #to initialize the second method of detecting viruses
+        if detection_method == "v1":
+            self.p2 = mp.Process(target=one_file, args = (result,))
+        elif detection_method == "v2":
+            self.p2 = mp.Process(target=one_file_v2, args = (result,)) #to initialize the second method of detecting viruses
         self.p2.start()
 
     @rumps.clicked("More", "Help us! Share a Virus")
