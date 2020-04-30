@@ -46,8 +46,8 @@ def remove(checkfornew):
             os.remove(checkfornew)
             
         # if new thing is directory
-        elif os.path.isdir(checkfornew):
-            os.rmdir(checkfornew)
+        # elif os.path.isdir(checkfornew):
+        #     os.rmdir(checkfornew)
 
 def alert(status, checkfornew):
     if status == "virus":

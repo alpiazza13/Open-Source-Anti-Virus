@@ -3,6 +3,9 @@ import rumps
 import dialogs
 from os_functions import open_github, show_code
 
+# set detction method
+detection_method = "v1"
+
 # This is the class defining the Mac MenuBar item which is the main user
 # interface and center of the app
 class MenuBar(rumps.App):
@@ -17,8 +20,11 @@ class MenuBar(rumps.App):
     def start(self, sender):
         if self.started == 0:
             dialogs.start_dialog()
-            self.p1 = mp.Process(target=main_loop)
-            # self.p1 = mp.Process(target=main_loop_v2) #to initialize the second method of detecting viruses
+            if detection_method == "v1":
+                self.p1 = mp.Process(target=main_loop)
+            elif detection_method == "v2":
+                self.p1 = mp.Process(target=main_loop)
+            self.p1 = mp.Process(target=main_loop_v2) #to initialize the second method of detecting viruses
             self.p1.start()
             self.started = 1
         else :
@@ -37,8 +43,8 @@ class MenuBar(rumps.App):
     @rumps.clicked("More","Single File Check")
     def set_time(self, _):
         result = dialogs.file_dialog()
-        self.p2 = mp.Process(target=one_file, args = (result,))
-        # self.p2 = mp.Process(target=one_file_v2, args = (result,)) #to initialize the second method of detecting viruses
+        # self.p2 = mp.Process(target=one_file, args = (result,))
+        self.p2 = mp.Process(target=one_file_v2, args = (result,)) #to initialize the second method of detecting viruses
         self.p2.start()
 
     @rumps.clicked("More", "Help us! Share a Virus")
@@ -59,7 +65,7 @@ class MenuBar(rumps.App):
 # Startup of Anti-virus File App
 dialogs.intro()
 if __name__ == "__main__":
-    app = MenuBar("Anti-🦠", quit_button=None)
+    app = MenuBar("Anti-Virus", quit_button=None)
     dialogs.wait()
 
     # this will start  loading the viruses, can take some time

@@ -78,4 +78,4 @@ def one_file(filename):
         alert("virus", filename)
     else:
         alert("not_virus", filename)
-    print('It took', time.time()-start, 'seconds.')
+    # print('It took', time.time()-start, 'seconds.')
