@@ -117,7 +117,7 @@ This function also checks the obvious good old way lame way of checking if fileh
 
 '''
 
-def is_virus_v2(filefile,viruses,threshold=0.30):
+def is_virus_v2(filefile,viruses,threshold=0.33):
     file_hex_str = get_hex_compressed(filefile, compress_bool=False)
     filefile_split = split_string(file_hex_str)
     all_seq_count = []
@@ -128,36 +128,30 @@ def is_virus_v2(filefile,viruses,threshold=0.30):
         virusfile_split = viruses[virus_key]["hexdump"].split(' ')
         intersection = set(virusfile_split).intersection(set(filefile_split))
         # if there length of instersection is too close to the (length(virus), length(file))
-        print(len(intersection),len(filefile_split),len(virusfile_split))
-        if len(intersection) / min(len(filefile_split),len(virusfile_split)) > 2*threshold:
-            return True
-
-        else:
-            file_seq_count = [0]
-            for each in intersection:
-                pos_virusfile_split = virusfile_split.index(each)
-                pos_filefile_split = filefile_split.index(each)
-                seq_count = 1
-                try:
-                    while (virusfile_split[pos_virusfile_split+1] == filefile_split[pos_filefile_split+1]):
-                        seq_count += 1
-                        pos_virusfile_split += 1
-                        pos_filefile_split += 1
-                        if (seq_count / min(len(virusfile_split),len(filefile_split))) > threshold:
-                            return True
-
-                except:
-                    pass
-
-                file_seq_count.append(seq_count)
-                virus_metric = seq_count / min(len(virusfile_split),len(filefile_split))
-                if (virus_metric > threshold):
-                    return True
-
-            all_seq_count.append(file_seq_count)
-            virus_metric = max(file_seq_count) / min(len(virusfile_split),len(filefile_split))
+        # print(len(intersection),len(filefile_split),len(virusfile_split))
+        file_seq_count = [0]
+        for each in intersection:
+            pos_virusfile_split = virusfile_split.index(each)
+            pos_filefile_split = filefile_split.index(each)
+            seq_count = 1
+            try:
+                while (virusfile_split[pos_virusfile_split+1] == filefile_split[pos_filefile_split+1]):
+                    seq_count += 1
+                    pos_virusfile_split += 1
+                    pos_filefile_split += 1
+                    if (seq_count / min(len(virusfile_split),len(filefile_split))) > threshold:
+                        return True
+            except:
+                pass
+            file_seq_count.append(seq_count)
+            virus_metric = seq_count / min(len(virusfile_split),len(filefile_split))
             if (virus_metric > threshold):
                 return True
+
+        all_seq_count.append(file_seq_count)
+        virus_metric = max(file_seq_count) / min(len(virusfile_split),len(filefile_split))
+        if (virus_metric > threshold):
+            return True
 
     virus_metric = max(list(map(max, all_seq_count))) / min(len(virusfile_split),len(filefile_split))
     if (virus_metric > threshold):

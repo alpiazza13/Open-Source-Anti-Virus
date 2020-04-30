@@ -23,12 +23,21 @@ from get_viruses import get_viruses_github
 viruses = get_viruses_github()
 '''
 
+'''
 file_url = "https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus/raw/master/viruses/all_viruses_compressed.json.zip"
 req = requests.get(file_url)
 
 zipped_file = zipfile.ZipFile(io.BytesIO(req.content))
 unzipped_file = zipped_file.read('all_viruses_compressed.json')
 # eval() evaluates string to dict and .decode decodes bytes object to string 
+viruses_dict = eval(unzipped_file.decode('utf-8'))
+'''
+file_url = "https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus/raw/master/viruses/all_viruses_full.json.zip"
+req = requests.get(file_url)
+
+zipped_file = zipfile.ZipFile(io.BytesIO(req.content))
+unzipped_file = zipped_file.read('all_viruses_compressed.json')
+# eval() evaluates string to dict and .decode decodes bytes object to string
 viruses_dict = eval(unzipped_file.decode('utf-8'))
 
 def main_loop_v2():
