@@ -70,8 +70,10 @@ if __name__ == "__main__":
     dialogs.wait()
 
     # this will start  loading the viruses, can take some time
-    from loop_and_onefile import main_loop, one_file
-    from loop_and_onefile_v2 import main_loop_v2, one_file_v2
+    if detection_method == "v1":
+        from loop_and_onefile import main_loop, one_file
+    elif detection_method == "v2":
+        from loop_and_onefile_v2 import main_loop_v2, one_file_v2
 
     app.start(0)
     app.menu = [
