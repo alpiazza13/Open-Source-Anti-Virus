@@ -7,7 +7,8 @@ from helpers import get_hex_compressed, unpack_folder
 import dialogs
 import io
 import zipfile
-# import time
+
+import time
 # Alternative ways of reading combined virus files
 '''
 viruses = ["viruses/virus1.txt", "viruses/virus2.txt", "viruses/virus3.txt", "viruses/try.jpg"]

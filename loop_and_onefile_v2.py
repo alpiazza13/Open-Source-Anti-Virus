@@ -3,7 +3,7 @@ import os
 import io
 import requests
 from os_functions import alert, newest_file, size_downloads
-from is_virus import is_virus_v2
+from is_virus import is_virus_v2, multiprocess_check_v2
 from helpers import get_hex_compressed, unpack_folder
 import zipfile
 
@@ -32,11 +32,12 @@ unzipped_file = zipped_file.read('all_viruses_compressed.json')
 # eval() evaluates string to dict and .decode decodes bytes object to string 
 viruses_dict = eval(unzipped_file.decode('utf-8'))
 '''
-file_url = "https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus/raw/master/viruses/all_viruses_full.json.zip"
+
+file_url = "https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus/raw/master/viruses/all_viruses_compressed.json.zip"
 req = requests.get(file_url)
 
 zipped_file = zipfile.ZipFile(io.BytesIO(req.content))
-unzipped_file = zipped_file.read('all_viruses_full.json')
+unzipped_file = zipped_file.read('all_viruses_compressed.json')
 # eval() evaluates string to dict and .decode decodes bytes object to string
 viruses_dict = eval(unzipped_file.decode('utf-8'))
 
@@ -52,7 +53,7 @@ def main_loop_v2():
             # making sure latest file is actually a file (and not a folder moved from somewhere else to downloads) and isn't a .crdownload or .download file
             if os.path.isfile(checkfornew) and not file_extension in ['.crdownload','.download','.zip']:
                 if checkfornew != newest:
-                    result = is_virus_v2(checkfornew, viruses_dict)
+                    result = multiprocess_check_v2(checkfornew, viruses_dict)
                     if result:
                         alert("virus", checkfornew)
                     else:
@@ -63,7 +64,7 @@ def main_loop_v2():
                 if checkfornew != newest:
                     files_to_scan = unpack_folder(checkfornew)
                     for each in files_to_scan:
-                        result = is_virus_v2(each, viruses_dict)
+                        result = multiprocess_check_v2(each, viruses_dict)
                         # if any is a virus, alert
                         if result:
                             alert("virus", checkfornew)
@@ -75,7 +76,7 @@ def main_loop_v2():
         size_folder = new_size_folder
 
 def one_file_v2(filename):
-    result = is_virus_v2(filename, viruses_dict)
+    result = multiprocess_check_v2(filename, viruses_dict)
     if result == True:
         alert("virus", filename)
     else:
