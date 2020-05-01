@@ -4,7 +4,7 @@ import dialogs
 from os_functions import open_github, show_code
 
 # set detction method
-detection_method = "v1"
+detection_method = "v2"
 
 # This is the class defining the Mac MenuBar item which is the main user
 # interface and center of the app
@@ -66,7 +66,7 @@ class MenuBar(rumps.App):
 # Startup of Anti-virus File App
 dialogs.intro()
 if __name__ == "__main__":
-    app = MenuBar("Anti-🦠", quit_button=None)
+    app = MenuBar("Anti-V", quit_button=None)
     dialogs.wait()
 
     # this will start  loading the viruses, can take some time

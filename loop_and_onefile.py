@@ -3,7 +3,7 @@ import os
 import requests
 from os_functions import alert, newest_file, size_downloads
 from is_virus import is_virus, multiprocess_check
-from helpers import get_hex_compressed, unpack_folder
+from helpers import get_hex_compressed, unpack_folder, md5_filehash
 import dialogs
 import io
 import zipfile
@@ -45,7 +45,7 @@ def main_loop():
             if os.path.isfile(checkfornew) and not file_extension in ['.crdownload','.download','.zip']:
                 if checkfornew != newest:
                     # result = is_virus(get_hex_compressed(checkfornew), viruses_dict, 200)
-                    result = multiprocess_check(get_hex_compressed(checkfornew), viruses_dict, 200)
+                    result = multiprocess_check(checkfornew, viruses_dict, 200)
                     if result == True:
                         alert("virus", checkfornew)
                     else:
@@ -73,7 +73,7 @@ def one_file(filename):
     # start = time.time()
     dialogs.checking_dialog()
     # result = is_virus(get_hex_compressed(filename), viruses_dict, 200)
-    result = multiprocess_check(get_hex_compressed(filename), viruses_dict, 200)
+    result = multiprocess_check(filename, viruses_dict, 200)
     if result == True:
         alert("virus", filename)
     else:
