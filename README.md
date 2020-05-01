@@ -1,6 +1,6 @@
 # Open-Source-Anti-Virus
 
-<img src="imgs/alert.png" height="40%" width="40%" > | <img src="imgs/menu_bar.png" height="27%" width="27%" > 
+<img src="imgs/alert.png" height="40%" width="40%" > | <img src="imgs/menu_bar.png" height="26%" width="26%" > 
 
 
 Open Source Anti-Virus MAC OS menu-bar app. A different approach to virus checking - uses a hexadecimal comparison based algorithm. 
