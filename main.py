@@ -3,6 +3,7 @@ import rumps
 import dialogs
 from os_functions import open_github, show_code
 
+
 # set detction method
 detection_method = "v2"
 

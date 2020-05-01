@@ -23,6 +23,7 @@ def virus_dialog():
     """).readlines()
     return result
 
+
 def all_good_dialog():
     pync.notify("All good - this is most likely not a virus", title="Anti-Virus App")
 
