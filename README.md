@@ -1,5 +1,8 @@
 # Open-Source-Anti-Virus
 
+<img src="imgs/alert.png" height="40%" width="40%" >
+</br>
+
 Open Source Anti-Virus MAC OS menu-bar app. A different approach to virus checking - uses a hexadecimal comparison based algorithm. 
 We use a big list of know viruses to test whether a file is a virus or not. We also support zip files and directories. This is Open Source because you can contribute by adding malicious files in our separate repository to help improve the app.
 
@@ -13,5 +16,4 @@ https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus
  - As it is, the main loop (excluding single file check) only works for downloads from chrome and safari but can be easily modified to cover more browsers (comments in the code can help know what to change)  
 </br>
 
-<img src="imgs/alert.png" height="40%" width="40%" >
 <img src="imgs/menu_bar.png" height="40%" width="40%" > 
