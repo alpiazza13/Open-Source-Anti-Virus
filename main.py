@@ -67,7 +67,7 @@ class MenuBar(rumps.App):
 # Startup of Anti-virus File App
 dialogs.intro()
 if __name__ == "__main__":
-    app = MenuBar("Anti-🦠", quit_button=None)
+    app = MenuBar("Anti-V", quit_button=None)
     dialogs.wait()
 
     # this will start  loading the viruses, can take some time

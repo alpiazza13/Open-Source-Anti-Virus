@@ -1,6 +1,8 @@
 from helpers import make_substrings, get_hex_compressed, md5_filehash, split_dict
 import multiprocessing as mp
+import os
 
+extensions = ['.action', '.apk', '.app', '.bat', '.bin', '.cmd', '.com', '.command', '.cpl', '.csh', '.gadget', '.inf', '.ins', '.inx', '.ipa', '.isu', '.job', '.jse', '.ksh', '.lnk', '.msc', '.msi', '.msp', '.mst', '.osx', '.out', '.paf', '.pif', '.prg', '.ps1', '.reg', '.rgs', '.run', '.scr', '.sct', '.shb', '.shs', '.u3p', '.vb', '.vbe', '.vbs', '.vbscript', '.workflow', '.ws', '.wsf', '.wsh']
 
 def compare(hex_file, hex_virus, sub_size):
     if sub_size > len(hex_file) or sub_size > len(hex_virus):
@@ -19,8 +21,12 @@ def compare(hex_file, hex_virus, sub_size):
 
 # check if hex_file is a virus
 # for no multiprocessing
-def is_virus(hex_file, viruses, final_subsize):  #final_subsize has to be carefully evaluated
+def is_virus(filename, viruses, final_subsize):  #final_subsize has to be carefully evaluated
+    hex_file = get_hex_compressed(filename,compress_bool=True)
     for virus in viruses:
+        if md5_filehash(filename) == viruses[virus]["md5hash"]:
+            return True
+
         sub_size = 16 #arbitrary small number
         go_on = True
         while go_on:
@@ -34,21 +40,26 @@ def is_virus(hex_file, viruses, final_subsize):  #final_subsize has to be carefu
     return False
 
 #multiprocessing version
-def is_virus_multi(hex_file, viruses, final_subsize, return_dict, process_nb):  #final_subsize has to be carefully evaluated
+def is_virus_multi(filename, viruses, final_subsize, return_dict, process_nb):  #final_subsize has to be carefully evaluated
+    hex_file = get_hex_compressed(filename,compress_bool=True)
     final_result = False
     for virus in viruses:
-        sub_size = 16 #arbitrary small number
-        go_on = True
-        while go_on:
-            if sub_size >= final_subsize:
-                final_result = True
-            result = compare(hex_file, viruses[virus]["hexdump"], sub_size)
-            # print("compare", sub_size, result)
-            if result == False:
-                go_on = False
-            sub_size = sub_size * 2 # kind of arbitrary
-    return_dict[str(process_nb)] = final_result
+        if md5_filehash(filename) == viruses[virus]["md5hash"]:
+            return_dict[str(process_nb)] = True
+            return return_dict
+        else:
+            sub_size = 16 #arbitrary small number
+            go_on = True
+            while go_on:
+                if sub_size >= final_subsize:
+                    final_result = True
+                result = compare(hex_file, viruses[virus]["hexdump"], sub_size)
+                # print("compare", sub_size, result)
+                if result == False:
+                    go_on = False
+                sub_size = sub_size * 2 # kind of arbitrary
 
+            return_dict[str(process_nb)] = final_result
 
 def multiprocess_check(hex_file, viruses, final_subsize):
     manager = mp.Manager()
@@ -114,46 +125,91 @@ A simple proof to show this works. If file is the same as virus, then m = 1, and
 Currently, I have decided that the threshold would be 0.3. A file is considered dangerous if v > 0.3
 
 This function also checks the obvious good old way lame way of checking if filehash of file corresponds to filehash of virus
-
 '''
 
-def is_virus_v2(filefile,viruses,threshold=0.33):
+def is_virus_v2(filefile, viruses, return_dict, process_nb, threshold=0.6):
     file_hex_str = get_hex_compressed(filefile, compress_bool=False)
     filefile_split = split_string(file_hex_str)
-    all_seq_count = []
-    for virus_key in viruses:
+    all_seq_count = [[0]]
+    len_virusfile_split = 0 
+    len_filefile_split = 0
+    len_intersection = 0
+    
+     
+    for virus_key in viruses:    
+        file_seq_count = [0]
+        virusfile_ext = os.path.splitext(virus_key)[1]
         # check if checksum of file is same as checksum of of virus
         if md5_filehash(filefile) == viruses[virus_key]["md5hash"]:
-            return True
-        virusfile_split = viruses[virus_key]["hexdump"].split(' ')
+            return_dict[str(process_nb)] = True
+            return return_dict
+
+        virusfile_split = split_string(viruses[virus_key]["hexdump"])
+        len_virusfile_split += len(virusfile_split)
+        len_filefile_split += len(filefile_split)
+        
         intersection = set(virusfile_split).intersection(set(filefile_split))
+        len_intersection += len(intersection)
         # if there length of instersection is too close to the (length(virus), length(file))
-        # print(len(intersection),len(filefile_split),len(virusfile_split))
-        file_seq_count = [0]
+        # print(virus_key, len(intersection),len(filefile_split),len(virusfile_split))
+        # if len(intersection) / min(len(filefile_split), len(virusfile_split)) < 0.5:
+        #     return False
         for each in intersection:
+            if len(intersection)>0:
+                virus_metric = max(file_seq_count) / ((len_filefile_split + len_virusfile_split)/len_intersection)
+                if (virus_metric > threshold):
+                    return_dict[str(process_nb)] = True
+                    return return_dict
+
             pos_virusfile_split = virusfile_split.index(each)
             pos_filefile_split = filefile_split.index(each)
             seq_count = 1
             try:
                 while (virusfile_split[pos_virusfile_split+1] == filefile_split[pos_filefile_split+1]):
+                    if len(intersection) > 0:
+                        if (seq_count / ((len_filefile_split + len_virusfile_split)/len_intersection)) > threshold:
+                            return_dict[str(process_nb)] = True
+                            return return_dict
                     seq_count += 1
                     pos_virusfile_split += 1
-                    pos_filefile_split += 1
-                    if (seq_count / min(len(virusfile_split),len(filefile_split))) > threshold:
-                        return True
+                    pos_filefile_split += 1       
             except:
                 pass
+
             file_seq_count.append(seq_count)
-            virus_metric = seq_count / min(len(virusfile_split),len(filefile_split))
-            if (virus_metric > threshold):
-                return True
 
         all_seq_count.append(file_seq_count)
-        virus_metric = max(file_seq_count) / min(len(virusfile_split),len(filefile_split))
+    
+    if len_intersection > 0:
+        virus_metric = max(list(map(max, all_seq_count))) / ((len_filefile_split + len_virusfile_split)/len_intersection)
         if (virus_metric > threshold):
-            return True
+            return_dict[str(process_nb)] = True
+            return return_dict
+        else: 
+            return_dict[str(process_nb)] = False
+            return return_dict
+    else:
+        return_dict[str(process_nb)] = False
+        return return_dict
 
-    virus_metric = max(list(map(max, all_seq_count))) / min(len(virusfile_split),len(filefile_split))
-    if (virus_metric > threshold):
+
+def multiprocess_check_v2(hex_file, viruses):
+    manager = mp.Manager()
+    return_dict = manager.dict()
+    list_processes = []
+    viruses_divided = split_dict(viruses,mp.cpu_count()+1)
+    # starting processes
+    process_nb = 0
+    for portion in viruses_divided:
+        p = mp.Process(target=is_virus_v2, args = (hex_file, portion, return_dict, process_nb,))
+        list_processes.append(p)
+        p.start()
+        process_nb += 1
+    # waiting for all processes to be done
+    for portion in list_processes:
+        portion.join()
+
+    if True in return_dict.values():
         return True
-    return False
+    else :
+        return False
