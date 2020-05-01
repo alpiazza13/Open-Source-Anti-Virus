@@ -13,4 +13,5 @@ https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus
  - As it is, the main loop (excluding single file check) only works for files downloaded from chrome and safari but can be easily modified to cover more browsers (comments in the code can help know what to change)  
 </br>
 
-<img src="imgs/menu_bar.png" height="40%" width="40%" > | <img src="imgs/alert.png" height="40%" width="40%" >
+<img src="imgs/alert.png" height="40%" width="40%" >
+<img src="imgs/menu_bar.png" height="40%" width="40%" > 
