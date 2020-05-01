@@ -27,7 +27,7 @@ for not_virus in not_viruses:
 print("\n")
 
 
-# uncomment to try kevin's method, but not sure if it works
+# uncomment to try version 2
 # print("KEVINS METHOD")
 # print("Virus checking results (hopefully all True):")
 # for virus in viruses:
