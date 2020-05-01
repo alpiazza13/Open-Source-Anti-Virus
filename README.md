@@ -13,4 +13,5 @@ https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus
  - As it is, the main loop (excluding single file check) only works for files downloaded from chrome and safari but can be easily modified to cover more browsers (comments in the code can help know what to change)
 
 ![menu of the app](imgs/menu_bar.png)
+<img src="imgs/menu_bar.png" height="50%" width="50%" >
 ![pop-up window that will appear when a file is a virus](imgs/alert.png)
