@@ -10,11 +10,8 @@ https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus
  - The UI is in the Mac Menu Bar at the top of the screen
  - A standalone app can be made with py2app
  - You can test it by running the scripts using (with python3 or more recent): python main.py
- - As it is, the main loop (excluding single file check) only works for files downloaded from chrome and safari but can be easily modified to cover more browsers (comments in the code can help know what to change)
+ - As it is, the main loop (excluding single file check) only works for files downloaded from chrome and safari but can be easily modified to cover more browsers (comments in the code can help know what to change)  
+  
 
 
-
-<img src="imgs/menu_bar.png" height="50%" width="50%" >
-
-
-<img src="imgs/alert.png" height="50%" width="50%" >
+<img src="imgs/menu_bar.png" height="50%" width="50%" > <img src="imgs/alert.png" height="50%" width="50%" >
