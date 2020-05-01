@@ -127,7 +127,7 @@ Currently, I have decided that the threshold would be 0.3. A file is considered 
 This function also checks the obvious good old way lame way of checking if filehash of file corresponds to filehash of virus
 '''
 
-def is_virus_v2(filefile, viruses, return_dict, process_nb, threshold=0.6):
+def is_virus_v2(filefile, viruses, return_dict, process_nb, threshold= 1.5):
     file_hex_str = get_hex_compressed(filefile, compress_bool=False)
     filefile_split = split_string(file_hex_str)
     all_seq_count = [[0]]
