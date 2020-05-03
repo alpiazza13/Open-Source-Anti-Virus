@@ -17,6 +17,6 @@ https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus
 </br>
 
 [CLICK HERE TO DOWNLOAD THE APP!](https://github.com/alpiazza13/Open-Source-Anti-Virus/releases/download/v1.0/Anti-Virus.zip)
-(Note : Your browser might tell you that this file is not commonly downloaded and may be dangerous. You can disard this to proceed with the download) 
+</br>(Note : Your browser might tell you that this file is not commonly downloaded and may be dangerous. You can disard this to proceed with the download) 
 
 Please consider contributing to our project, or submitting a malware file to our database!
