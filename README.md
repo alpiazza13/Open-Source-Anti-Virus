@@ -11,7 +11,7 @@ https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus
 
  - This app only runs on macOS.
  - The UI is in the Mac Menu Bar at the top of the screen
- - A standalone macOS app is provided (made with py2app)
+ - A standalone macOS app is provided (download link at the botton of this README) 
  - You can test it by running main.py with python (you need to install the rumps and pync packages with pip) 
  - As it is, the main loop (excluding single file check) only works for downloads from chrome and safari but can be easily modified to cover more browsers (comments in the code can help know what to change)  
 </br>
