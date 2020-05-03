@@ -16,6 +16,7 @@ https://github.com/samueljaval/List-of-viruses-for-Open-Source-Anti-Virus
  - As it is, the main loop (excluding single file check) only works for downloads from chrome and safari but can be easily modified to cover more browsers (comments in the code can help know what to change)  
 </br>
 
-[CLICK HERE TO DOWNLOAD THE APP!](https://github.com/alpiazza13/Open-Source-Anti-Virus/releases/download/v1.0/Anti-Virus.zip) 
+[CLICK HERE TO DOWNLOAD THE APP!](https://github.com/alpiazza13/Open-Source-Anti-Virus/releases/download/v1.0/Anti-Virus.zip)
+(Note : Your browser might tell you that this file is not commonly downloaded and may be dangerous. You can disard this to proceed with the download) 
 
 Please consider contributing to our project, or submitting a malware file to our database!
